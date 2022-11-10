@@ -15,6 +15,7 @@ const connectDB = require('./db/connect')
 // routers
 const authRouter = require('./routes/authRoutes')
 const userRouter = require('./routes/userRoutes')
+const ticketRouter = require('./routes/ticketRoutes')
 
 // app usage
 app.use(morgan("tiny"));
@@ -25,6 +26,7 @@ app.use(cookieParser(process.env.JWT_SECRET));
 
 app.use("/api/v1/auth", authRouter)
 app.use('/api/v1/users', userRouter)
+app.use('/api/v1/tickets', ticketRouter)
 
 const port = process.env.PORT || 3000
 const start = async() => {
