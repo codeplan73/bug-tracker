@@ -6,12 +6,7 @@ const { checkPermissions } = require('../utils')
 const cloudinary = require('cloudinary').v2
 const fs = require('fs')
 const path = require('path')
-/**
- * assign ticket to user > ticket history
- *  unassigned tickets
- *  failed tickets
- *  fixed tickets
- */
+
 /**
  * @param {post request}
  * @param {authenticated user can create ticket}
@@ -33,6 +28,7 @@ const createTicket = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ticket})
 }
 
+
 /**
  * @param {get request}
  * @param {authenticated and authorize admin can view all tickets}
@@ -42,31 +38,40 @@ const getAllTickets = async (req, res) => {
   res.status(StatusCodes.OK).json({tickets, count:tickets.length})
 }
 
+
 /**
  * @param {get request}
  * @param {authenticated and authorize user can view user tickets}
  */
 const getMyTickets = async (req, res) => {
   const myTickets = await Ticket.find({user: req.user.userId})
-  checkPermissions(req.user, myTickets.user)
+  checkPermissions(req.user, myTickets[0].user)
   res.status(StatusCodes.OK).json({myTickets, count:myTickets.length})
 }
+
+
 /**
  * @param {get request}
  * @param {authenticated and authorize user can view user tickets}
  */
 const getMyAssignedTickets = async (req, res) => {
   const myAssignedTickets = await Ticket.find({assignee: req.user.userId})
+//   checkPermissions(req.user, myAssignedTickets[0].user)
   res.status(StatusCodes.OK).json({myAssignedTickets, count:myAssignedTickets.length})
 }
+
 
 /**
  * @param {get request}
  * @param {authenticated and authorize user can view user tickets}
  */
 const getTicket = async (req, res) => {
-  res.send('get tickets details')
+    const id = req.params.id;
+    const ticket = await Ticket.find({_id: id})
+    checkPermissions(req.user, ticket[0].user)
+    res.status(StatusCodes.OK).json({ticket})
 }
+
 
 /**
  * @param {patch request}
@@ -76,20 +81,37 @@ const assignUserTicket = async (req, res) => {
   res.send('assign ticket to user')
 }
 
+
 /**
  * @param {patch request}
  * @param {authenticated and authorize user can updata ticket status}
  */
 const updateTicketStatus = async (req, res) => {
-  res.send('update ticket status')
+    const id = req.params.id;
+
+    const ticket = await Ticket.findByIdAndUpdate({_id: id}, req.body, {new:true, runValidators:true})
+
+    if(!ticket){
+        throw new CustomError.NotFoundError(`No ticket with id ${id}`);
+    }
+    res.status(StatusCodes.OK).json({ticket})
 }
+
 
 /**
  * @param {delete request}
  * @param {authenticated and authorize user can updata ticket status}
  */
 const deleteTicket = async (req, res) => {
-  res.send('delete ticket')
+  const id = req.params.id;
+  const ticket = await Ticket.findOne({_id: id})
+  
+  if(!ticket){
+    throw new CustomError.NotFoundError(`No ticket with id: ${id}`);
+  }
+
+  await ticket.remove()
+  res.status(StatusCodes.OK).json({msf: 'Success! Ticket has benn removed'})
 }
 
 module.exports = {
