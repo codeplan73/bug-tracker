@@ -5,7 +5,7 @@ const {createTicket, getAllTickets, getMyTickets, getMyAssignedTickets, getTicke
 
 router.route('/').post(authenticateUser, createTicket)
 router.route('/').get(authenticateUser, authorizePermissions('admin'), getAllTickets)
-router.route('/assignTicket').patch(authenticateUser, authorizePermissions('admin'), assignUserTicket)
+router.route('/assignTicket/:id').patch(authenticateUser, authorizePermissions('admin'), assignUserTicket)
 
 router.route('/userTickets').get(authenticateUser, getMyTickets)
 router.route('/assignedTickets').get(authenticateUser, getMyAssignedTickets)
