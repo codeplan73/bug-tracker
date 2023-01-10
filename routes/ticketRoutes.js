@@ -13,4 +13,4 @@ router.route('/:id').get(authenticateUser, getTicket)
 router.route('/:id').patch(authenticateUser, updateTicketStatus)
 router.route('/:id').delete(authenticateUser, authorizePermissions('admin'), deleteTicket)
 
-module.exports = router;
+module.exports = router; 

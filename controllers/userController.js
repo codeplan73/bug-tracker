@@ -2,7 +2,7 @@ const User = require("../model/User");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 const { attachCookiesToResponse, createTokenUser, checkPermissions } = require('../utils')
-
+ 
 const getAllUsers = async(req, res) => {
     const users = await User.find({}).select('-password');
     res.status(StatusCodes.OK).json({users, count:users.length})
@@ -17,7 +17,7 @@ const getSingleUser = async(req, res) => {
 }
 const getCurrentUser = async(req, res) => {
     res.status(StatusCodes.OK).json({user:req.user})
-}
+} 
 const updateUser = async(req, res) => {
     const {name, email} = req.body;
 

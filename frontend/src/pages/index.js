@@ -1,0 +1,8 @@
+export {default as Homepage} from './Homepage'
+export {default as Login} from './Login'
+export {default as Register} from './Register'
+export {default as Dashboard} from './Dashboard'
+export {default as CreateTask} from './CreateTask'
+export {default as ShowTask} from './ShowTask'
+export {default as TaskList} from './TaskList'
+export {default as UpdateTask} from './UpdateTask' 

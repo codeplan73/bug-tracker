@@ -5,13 +5,16 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "server": "nodemon app.js",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Emmanuel Omonzebaguan",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.32.0",
+    "concurrently": "^7.5.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -30,6 +33,7 @@
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.3",
     "nodemon": "^2.0.20"
   }
 }
