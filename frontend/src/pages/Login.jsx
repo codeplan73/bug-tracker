@@ -13,7 +13,7 @@ const Login = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const {user,  loading, error, success, message} = useSelector(state => state.auth)
+  const {user, loading, error, success, message} = useSelector(state => state.auth)
 
   useEffect(() => {
     if(error){

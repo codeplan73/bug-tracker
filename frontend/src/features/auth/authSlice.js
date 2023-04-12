@@ -9,10 +9,10 @@ const initialState = {
   loading: false,
   message: '', 
 }
-
+ 
 // register user
 export const register = createAsyncThunk(
-  'auth/register',
+  'auth/register',  
   async (user, thunkAPI) => {
     try {
       return await authService.register(user) 
